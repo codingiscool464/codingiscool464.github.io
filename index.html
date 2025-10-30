@@ -3,50 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Links</title>
+  <title>Game Hub</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d1117;
-      color: #fff;
-      text-align: center;
+    :root {
+      --bg: #0b0e14;
+      --card-bg: #1a1f27;
+      --card-hover: #232933;
+      --accent: #00d1ff;
+      --text: #e5e5e5;
+      --subtitle: #9aa0a6;
+    }
+
+    * {
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial, sans-serif;
     }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
     .container {
-      max-width: 600px;
-      margin: auto;
+      width: 100%;
+      max-width: 800px;
+      animation: fadeIn 0.8s ease;
     }
-    a {
-      display: block;
-      background: #161b22;
-      color: #58a6ff;
-      text-decoration: none;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 10px 0;
-      border: 1px solid #30363d;
-      transition: 0.2s;
-      font-size: 18px;
-    }
-    a:hover {
-      background: #21262d;
-      transform: scale(1.03);
-    }
+
     h1 {
-      margin-bottom: 25px;
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    p.header-sub {
+      text-align: center;
+      opacity: 0.75;
+      margin-bottom: 35px;
+    }
+
+    .game-card {
+      display: flex;
+      background: var(--card-bg);
+      border: 1px solid #2c3440;
+      margin: 16px 0;
+      padding: 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: 0.25s ease;
+      box-shadow: 0 0 0 transparent;
+      align-items: center;
+    }
+
+    .game-card:hover {
+      background: var(--card-hover);
+      transform: scale(1.03);
+      box-shadow: 0px 0px 14px rgba(0, 209, 255, 0.4);
+    }
+
+    .game-thumb {
+      width: 80px;
+      height: 80px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      margin-right: 18px;
+      flex-shrink: 0;
+    }
+
+    .game-info h2 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+      color: var(--accent);
+    }
+
+    .game-info p {
+      font-size: 0.95rem;
+      color: var(--subtitle);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>My Websites</h1>
+    <h1>Game Launcher</h1>
+    <p class="header-sub">Click a game to play!</p>
 
-    <a href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">Amhooman Games</a>
-    <a href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">A Small World Cup</a>
-    <a href="https://codingiscool464.github.io/polytrack/" target="_blank">PolyTrack</a>
-    <a href="https://codingiscool464.github.io/bitlife/" target="_blank">BitLife</a>
-    <a href="https://whateverelse.com" target="_blank">Other Site</a>
+    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
+      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+      <div class="game-info">
+        <h2>Amhooman Games</h2>
+        <p>Browser • Multi-game arcade</p>
+      </div>
+    </a>
+
+    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
+      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+      <div class="game-info">
+        <h2>A Small World Cup</h2>
+        <p>Physics • Soccer • Funny</p>
+      </div>
+    </a>
+
+    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
+      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+      <div class="game-info">
+        <h2>PolyTrack</h2>
+        <p>Racing • Skill • Browser</p>
+      </div>
+    </a>
+
+    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
+      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+      <div class="game-info">
+        <h2>BitLife</h2>
+        <p>Life Simulator • Decisions</p>
+      </div>
+    </a>
+
+    <a class="game-card" href="https://whateverelse.com" target="_blank">
+      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+      <div class="game-info">
+        <h2>Other Site</h2>
+        <p>Mystery • Unknown • Click</p>
+      </div>
+    </a>
 
   </div>
 </body>

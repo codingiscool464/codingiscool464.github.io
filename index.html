@@ -34,7 +34,6 @@
     .container {
       width: 100%;
       max-width: 800px;
-      animation: fadeIn 0.8s ease;
     }
 
     h1 {
@@ -42,12 +41,16 @@
       text-align: center;
       margin-bottom: 8px;
       color: var(--accent);
+      opacity: 0;
+      animation: fadeIn 0.8s forwards 0.1s;
     }
 
     p.header-sub {
       text-align: center;
       opacity: 0.75;
       margin-bottom: 35px;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards 0.3s;
     }
 
     .game-card {
@@ -62,6 +65,9 @@
       transition: 0.25s ease;
       box-shadow: 0 0 0 transparent;
       align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardFadeIn 0.6s forwards;
     }
 
     .game-card:hover {
@@ -71,13 +77,18 @@
     }
 
     .game-thumb {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       background-size: cover;
       background-position: center;
-      border-radius: 10px;
+      border-radius: 12px;
       margin-right: 18px;
       flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .game-card:hover .game-thumb {
+      transform: scale(1.08);
     }
 
     .game-info h2 {
@@ -92,8 +103,39 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .game-card {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px;
+      }
+
+      .game-thumb {
+        width: 80px;
+        height: 80px;
+        margin-right: 0;
+        margin-bottom: 12px;
+      }
+
+      .game-info h2 {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+
+      .game-info p {
+        font-size: 0.85rem;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -102,7 +144,7 @@
     <h1>Game Launcher</h1>
     <p class="header-sub">Click a game to play!</p>
 
-    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
+    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank" style="animation-delay: 0.4s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1208.png?raw=true');"></div>
       <div class="game-info">
         <h2>Amhooman Games</h2>
@@ -110,7 +152,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
+    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank" style="animation-delay: 0.5s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1209.png?raw=true');"></div>
       <div class="game-info">
         <h2>A Small World Cup</h2>
@@ -118,7 +160,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
+    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank" style="animation-delay: 0.6s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1210.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>PolyTrack</h2>
@@ -126,7 +168,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
+    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank" style="animation-delay: 0.7s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1211.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>BitLife</h2>
@@ -134,11 +176,11 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://whateverelse.com" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://via.placeholder.com/80');"></div>
+    <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank" style="animation-delay: 0.8s;">
+      <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1212.jpeg?raw=true');"></div>
       <div class="game-info">
-        <h2>Other Site</h2>
-        <p>Mystery • Unknown • Click</p>
+        <h2>EggyCar</h2>
+        <p>Racing • Arcade • Browser</p>
       </div>
     </a>
 

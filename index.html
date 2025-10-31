@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Launcher</title>
+  <title>Game Hub</title>
   <style>
     :root {
       --bg: #0b0e14;
@@ -34,6 +34,7 @@
     .container {
       width: 100%;
       max-width: 800px;
+      animation: fadeIn 0.8s ease;
     }
 
     h1 {
@@ -41,16 +42,12 @@
       text-align: center;
       margin-bottom: 8px;
       color: var(--accent);
-      opacity: 0;
-      animation: fadeIn 0.8s forwards 0.1s;
     }
 
     p.header-sub {
       text-align: center;
       opacity: 0.75;
       margin-bottom: 35px;
-      opacity: 0;
-      animation: fadeIn 0.8s forwards 0.3s;
     }
 
     .game-card {
@@ -66,8 +63,8 @@
       box-shadow: 0 0 0 transparent;
       align-items: center;
       opacity: 0;
-      transform: translateY(20px);
-      animation: cardFadeIn 0.6s forwards;
+      transform: translateY(8px);
+      animation: cardFade 0.45s ease forwards;
     }
 
     .game-card:hover {
@@ -77,18 +74,13 @@
     }
 
     .game-thumb {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       background-size: cover;
       background-position: center;
-      border-radius: 12px;
+      border-radius: 10px;
       margin-right: 18px;
       flex-shrink: 0;
-      transition: transform 0.3s ease;
-    }
-
-    .game-card:hover .game-thumb {
-      transform: scale(1.08);
     }
 
     .game-info h2 {
@@ -103,37 +95,14 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    @keyframes cardFadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 600px) {
-      .game-card {
-        flex-direction: column;
-        align-items: center;
-        padding: 12px;
-      }
-
-      .game-thumb {
-        width: 80px;
-        height: 80px;
-        margin-right: 0;
-        margin-bottom: 12px;
-      }
-
-      .game-info h2 {
-        font-size: 1.2rem;
-        text-align: center;
-      }
-
-      .game-info p {
-        font-size: 0.85rem;
-        text-align: center;
+    @keyframes cardFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
@@ -143,7 +112,7 @@
     <h1>Game Launcher</h1>
     <p class="header-sub">Click a game to play!</p>
 
-    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank" style="animation-delay: 0.4s;">
+    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank" style="animation-delay: 0.10s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1208.png?raw=true');"></div>
       <div class="game-info">
         <h2>Amhooman Games</h2>
@@ -151,7 +120,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank" style="animation-delay: 0.55s;">
+    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank" style="animation-delay: 0.25s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1209.png?raw=true');"></div>
       <div class="game-info">
         <h2>A Small World Cup</h2>
@@ -159,7 +128,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank" style="animation-delay: 0.7s;">
+    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank" style="animation-delay: 0.40s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1210.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>PolyTrack</h2>
@@ -167,7 +136,7 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank" style="animation-delay: 0.85s;">
+    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank" style="animation-delay: 0.55s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1211.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>BitLife</h2>
@@ -175,19 +144,27 @@
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank" style="animation-delay: 1s;">
+    <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank" style="animation-delay: 0.70s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1212.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>Eggy Car</h2>
-        <p>Racing • Arcade • Browser</p>
+        <p>Driving • Hill Climb</p>
       </div>
     </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank" style="animation-delay: 1.15s;">
+    <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank" style="animation-delay: 0.85s;">
       <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1213.jpeg?raw=true');"></div>
       <div class="game-info">
         <h2>FNAF</h2>
-        <p>Horror • Survival • Browser</p>
+        <p>Horror • Strategy • Classic</p>
+      </div>
+    </a>
+
+    <a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank" style="animation-delay: 1.00s;">
+      <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1215.webp?raw=true');"></div>
+      <div class="game-info">
+        <h2>Ragdoll Archers</h2>
+        <p>Physics • Archery • PvP</p>
       </div>
     </a>
 

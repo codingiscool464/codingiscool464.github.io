@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Hub</title>
+  <title>Game Launcher</title>
   <style>
     :root {
       --bg: #0b0e14;
@@ -47,19 +47,19 @@
     p.header-sub {
       text-align: center;
       opacity: 0.75;
-      margin-bottom: 20px;
+      margin-bottom: 35px;
     }
 
     #search {
       width: 100%;
-      padding: 12px 16px;
+      padding: 12px;
+      margin-bottom: 20px;
       border-radius: 8px;
       border: none;
       outline: none;
+      background: #161b22;
+      color: #e5e5e5;
       font-size: 1rem;
-      margin-bottom: 25px;
-      background: #11141b;
-      color: var(--text);
     }
 
     .game-card {
@@ -72,25 +72,15 @@
       text-decoration: none;
       color: var(--text);
       transition: 0.25s ease;
-      box-shadow: 0 0 0 transparent;
       align-items: center;
-      opacity: 1;
-      transform: scale(1);
+      opacity: 0;
+      animation: fadeIn 0.7s ease forwards;
     }
 
     .game-card:hover {
       background: var(--card-hover);
       transform: scale(1.03);
       box-shadow: 0px 0px 14px rgba(0, 209, 255, 0.4);
-    }
-
-    /* Disable animations while searching */
-    .no-anim .game-card {
-      transition: none !important;
-      animation: none !important;
-      transform: none !important;
-      box-shadow: none !important;
-      opacity: 1 !important;
     }
 
     .game-thumb {
@@ -125,90 +115,97 @@
     <h1>Game Launcher</h1>
     <p class="header-sub">Click a game to play!</p>
 
-    <input type="text" id="search" placeholder="Search games...">
+    <input type="text" id="search" placeholder="Search for a game..." />
 
-    <!-- Alphabetized A-Z by game title -->
+    <div id="game-list">
+      <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1209.png?raw=true');"></div>
+        <div class="game-info">
+          <h2>A Small World Cup</h2>
+          <p>Physics • Soccer • Funny</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
-      <div class="game-info">
-        <h2>A Small World Cup</h2>
-        <p>Physics • Soccer • Funny</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1208.png?raw=true');"></div>
+        <div class="game-info">
+          <h2>Amhooman Games</h2>
+          <p>Browser • Multi-game arcade</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1208.png');"></div>
-      <div class="game-info">
-        <h2>Amhooman Games</h2>
-        <p>Browser • Multi-game arcade</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1211.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>BitLife</h2>
+          <p>Life Simulator • Decisions</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1211.jpeg');"></div>
-      <div class="game-info">
-        <h2>BitLife</h2>
-        <p>Life Simulator • Decisions</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1212.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>Eggy Car</h2>
+          <p>Driving • Balance • Challenge</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1212.jpeg');"></div>
-      <div class="game-info">
-        <h2>Eggy Car</h2>
-        <p>Car • Hill Climb • Balance</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1213.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>FNAF 1</h2>
+          <p>Horror • Survival</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1213.jpeg');"></div>
-      <div class="game-info">
-        <h2>FNAF</h2>
-        <p>Horror • Cameras • Survive</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/FNAF2/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1224.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>FNAF 2</h2>
+          <p>Horror • Survival</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1210.jpeg');"></div>
-      <div class="game-info">
-        <h2>PolyTrack</h2>
-        <p>Racing • Skill • Browser</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1210.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>PolyTrack</h2>
+          <p>Racing • Skill • Browser</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1215.webp');"></div>
-      <div class="game-info">
-        <h2>Ragdoll Archers</h2>
-        <p>Bow Combat • Physics</p>
-      </div>
-    </a>
+      <a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1215.webp?raw=true');"></div>
+        <div class="game-info">
+          <h2>Ragdoll Archers</h2>
+          <p>Archery • Physics • Duel</p>
+        </div>
+      </a>
 
-    <a class="game-card" href="https://codingiscool464.github.io/run3/game" target="_blank">
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1216.jpeg');"></div>
-      <div class="game-info">
-        <h2>Run 3</h2>
-        <p>Endless Runner • Platformer</p>
-      </div>
-    </a>
-
+      <a class="game-card" href="https://codingiscool464.github.io/run3/game" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1216.jpeg?raw=true');"></div>
+        <div class="game-info">
+          <h2>Run 3</h2>
+          <p>Endless Runner • Platformer</p>
+        </div>
+      </a>
+    </div>
   </div>
 
   <script>
-    const search = document.getElementById("search");
-    const cards = document.querySelectorAll(".game-card");
-    const container = document.querySelector(".container");
+    const search = document.getElementById('search');
+    const cards = document.querySelectorAll('.game-card');
+    const gameList = document.getElementById('game-list');
 
-    search.addEventListener("input", () => {
+    search.addEventListener('input', () => {
       const value = search.value.toLowerCase();
-
-      // Disable animations while searching
-      container.classList.add("no-anim");
+      const isSearching = value.trim().length > 0;
 
       cards.forEach(card => {
-        const name = card.querySelector("h2").textContent.toLowerCase();
-        card.style.display = name.includes(value) ? "flex" : "none";
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        const match = title.includes(value);
+        card.style.display = match || !isSearching ? 'flex' : 'none';
+        card.style.animation = isSearching ? 'none' : 'fadeIn 0.7s ease forwards';
       });
     });
   </script>

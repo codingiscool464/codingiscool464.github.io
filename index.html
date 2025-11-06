@@ -1,213 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Game Launcher</title>
   <style>
-    :root {
-      --bg: #0b0e14;
-      --card-bg: #1a1f27;
-      --card-hover: #232933;
-      --accent: #00d1ff;
-      --text: #e5e5e5;
-      --subtitle: #9aa0a6;
+    :root{
+      --bg:#0b0e14; --card-bg:#1a1f27; --card-hover:#232933;
+      --accent:#00d1ff; --text:#e5e5e5; --subtitle:#9aa0a6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",Arial,sans-serif}
+    body{
+      background:var(--bg); color:var(--text);
+      display:flex; justify-content:center; align-items:flex-start;
+      min-height:100vh; padding:40px 20px;
+    }
+    .container{width:100%;max-width:800px; animation:fadeIn 0.8s ease}
+    h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent)}
+    p.header-sub{ text-align:center; opacity:.75; margin-bottom:20px }
+    #search{
+      width:100%; padding:12px; margin-bottom:20px; border-radius:8px;
+      border:none; outline:none; background:#161b22; color:var(--text); font-size:1rem;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Inter", Arial, sans-serif;
+    .game-card{
+      display:flex; background:var(--card-bg); border:1px solid #2c3440;
+      margin:16px 0; padding:18px; border-radius:12px; text-decoration:none;
+      color:var(--text); transition:0.25s ease; align-items:center;
+      opacity:0; animation:fadeIn 0.7s ease forwards;
+    }
+    .game-card:hover{
+      background:var(--card-hover); transform:scale(1.03);
+      box-shadow:0 0 14px rgba(0,209,255,0.4);
+    }
+    .game-thumb{
+      width:80px; height:80px; background-size:cover; background-position:center;
+      border-radius:10px; margin-right:18px; flex-shrink:0;
+    }
+    .game-info h2{ font-size:1.4rem; margin-bottom:5px; color:var(--accent) }
+    .game-info p{ font-size:.95rem; color:var(--subtitle) }
+
+    .no-anim .game-card {
+      transition: none !important; animation: none !important; opacity:1 !important; transform:none !important; box-shadow:none !important;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 40px 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 800px;
-      animation: fadeIn 0.8s ease;
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      text-align: center;
-      margin-bottom: 8px;
-      color: var(--accent);
-    }
-
-    p.header-sub {
-      text-align: center;
-      opacity: 0.75;
-      margin-bottom: 35px;
-    }
-
-    #search {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      background: #161b22;
-      color: #e5e5e5;
-      font-size: 1rem;
-    }
-
-    .game-card {
-      display: flex;
-      background: var(--card-bg);
-      border: 1px solid #2c3440;
-      margin: 16px 0;
-      padding: 18px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text);
-      transition: 0.25s ease;
-      align-items: center;
-      opacity: 0;
-      animation: fadeIn 0.7s ease forwards;
-    }
-
-    .game-card:hover {
-      background: var(--card-hover);
-      transform: scale(1.03);
-      box-shadow: 0px 0px 14px rgba(0, 209, 255, 0.4);
-    }
-
-    .game-thumb {
-      width: 80px;
-      height: 80px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 10px;
-      margin-right: 18px;
-      flex-shrink: 0;
-    }
-
-    .game-info h2 {
-      font-size: 1.4rem;
-      margin-bottom: 5px;
-      color: var(--accent);
-    }
-
-    .game-info p {
-      font-size: 0.95rem;
-      color: var(--subtitle);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <h1>Game Launcher</h1>
     <p class="header-sub">Click a game to play!</p>
 
-    <input type="text" id="search" placeholder="Search for a game..." />
+    <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
 
     <div id="game-list">
       <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1209.png?raw=true');"></div>
-        <div class="game-info">
-          <h2>A Small World Cup</h2>
-          <p>Physics • Soccer • Funny</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
+        <div class="game-info"><h2>A Small World Cup</h2><p>Physics • Soccer • Funny</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1208.png?raw=true');"></div>
-        <div class="game-info">
-          <h2>Amhooman Games</h2>
-          <p>Browser • Multi-game arcade</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1208.png');"></div>
+        <div class="game-info"><h2>Amhooman Games</h2><p>Browser • Multi-game arcade</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1211.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>BitLife</h2>
-          <p>Life Simulator • Decisions</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1211.jpeg');"></div>
+        <div class="game-info"><h2>BitLife</h2><p>Life Simulator • Decisions</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1212.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>Eggy Car</h2>
-          <p>Driving • Balance • Challenge</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1212.jpeg');"></div>
+        <div class="game-info"><h2>Eggy Car</h2><p>Car • Hill Climb • Balance</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1213.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>FNAF 1</h2>
-          <p>Horror • Survival</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1213.jpeg');"></div>
+        <div class="game-info"><h2>FNAF 1</h2><p>Horror • Cameras • Survive</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/FNAF2/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1224.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>FNAF 2</h2>
-          <p>Horror • Survival</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1224.jpeg');"></div>
+        <div class="game-info"><h2>FNAF 2</h2><p>Horror • Survival</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1210.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>PolyTrack</h2>
-          <p>Racing • Skill • Browser</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1210.jpeg');"></div>
+        <div class="game-info"><h2>PolyTrack</h2><p>Racing • Skill • Browser</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1215.webp?raw=true');"></div>
-        <div class="game-info">
-          <h2>Ragdoll Archers</h2>
-          <p>Archery • Physics • Duel</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1215.webp');"></div>
+        <div class="game-info"><h2>Ragdoll Archers</h2><p>Bow Combat • Physics</p></div>
       </a>
 
       <a class="game-card" href="https://codingiscool464.github.io/run3/game" target="_blank">
-        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1216.jpeg?raw=true');"></div>
-        <div class="game-info">
-          <h2>Run 3</h2>
-          <p>Endless Runner • Platformer</p>
-        </div>
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1216.jpeg');"></div>
+        <div class="game-info"><h2>Run 3</h2><p>Runner • Void • Gravity</p></div>
       </a>
+
     </div>
   </div>
+<script>
+const search = document.getElementById("search");
+const container = document.getElementById("container");
+const cards = document.querySelectorAll(".game-card");
 
-  <script>
-    const search = document.getElementById('search');
-    const cards = document.querySelectorAll('.game-card');
-    const gameList = document.getElementById('game-list');
+search.addEventListener("input", () => {
+  const value = search.value.toLowerCase();
+  if(value){ container.classList.add("no-anim"); }
+  else{ container.classList.remove("no-anim"); }
 
-    search.addEventListener('input', () => {
-      const value = search.value.toLowerCase();
-      const isSearching = value.trim().length > 0;
-
-      cards.forEach(card => {
-        const title = card.querySelector('h2').textContent.toLowerCase();
-        const match = title.includes(value);
-        card.style.display = match || !isSearching ? 'flex' : 'none';
-        card.style.animation = isSearching ? 'none' : 'fadeIn 0.7s ease forwards';
-      });
-    });
-  </script>
+  cards.forEach(card =>{
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(value) ? "flex" : "none";
+  });
+});
+</script>
 </body>
 </html>

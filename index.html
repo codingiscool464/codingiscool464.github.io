@@ -84,7 +84,7 @@
         <div class="game-info"><h2>Eggy Car</h2><p>Car • Hill Climb • Balance</p></div>
       </a>
 
-      <!-- F -->
+      <!-- FNAF Series -->
       <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
         <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1213.jpeg');"></div>
         <div class="game-info"><h2>FNAF 1</h2><p>Horror • Cameras • Survive</p></div>
@@ -102,13 +102,13 @@
 
       <a class="game-card" href="https://codingiscool464.github.io/FNAF4/" target="_blank">
         <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1235.webp');"></div>
-        <div class="game-info"><h2>FNAF 4</h2><p>Horror • Fear • Nightmares</p></div>
+        <div class="game-info"><h2>FNAF 4</h2><p>Horror • Nightmares</p></div>
       </a>
 
       <!-- Monkey Mart -->
       <a class="game-card" href="https://codingiscool464.github.io/MonkeyMart/" target="_blank">
         <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1234.jpeg');"></div>
-        <div class="game-info"><h2>Monkey Mart</h2><p>Shop • Clicker • Fun</p></div>
+        <div class="game-info"><h2>Monkey Mart</h2><p>Shopping • Fun • Arcade</p></div>
       </a>
 
       <!-- O -->
@@ -136,15 +136,44 @@
 
     </div>
   </div>
+
 <script>
 const search = document.getElementById("search");
 const container = document.getElementById("container");
 const cards = document.querySelectorAll(".game-card");
 
+// Create secret card (hidden initially)
+const secretCard = document.createElement("a");
+secretCard.className = "game-card";
+secretCard.href = "https://github.com/codingiscool464"; // admin redirect
+secretCard.target = "_blank";
+secretCard.style.display = "none";
+secretCard.innerHTML = `
+  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1236.webp');"></div>
+  <div class="game-info"><h2>Admin Source Code</h2><p>Secret • Code Access</p></div>
+`;
+document.getElementById("game-list").appendChild(secretCard);
+
+// Reveal secret card when "adminiscool464" is typed and Enter pressed
+search.addEventListener("keypress", (e) => {
+  if(e.key === "Enter") {
+    const value = search.value.toLowerCase();
+    if(value === "adminiscool464"){
+      secretCard.style.display = "flex";
+      search.value = "";
+    }
+  }
+});
+
+// Search filtering
 search.addEventListener("input", () => {
   const value = search.value.toLowerCase();
-  if(value){ container.classList.add("no-anim"); }
-  else{ container.classList.remove("no-anim"); }
+
+  if(value){ 
+    container.classList.add("no-anim"); 
+  } else { 
+    container.classList.remove("no-anim"); 
+  }
 
   cards.forEach(card =>{
     const text = card.innerText.toLowerCase();

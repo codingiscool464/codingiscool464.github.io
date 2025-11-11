@@ -67,6 +67,7 @@
   </style>
 </head>
 <body>
+
   <!-- Suggestions link -->
   <a class="suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
 
@@ -156,6 +157,12 @@
         <div class="game-info"><h2>Run 3</h2><p>Runner • Void • Gravity</p></div>
       </a>
 
+      <!-- S -->
+      <a class="game-card" href="https://codingiscool464.github.io/SubwaySurfers/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1239.png?raw=true');"></div>
+        <div class="game-info"><h2>Subway Surfers</h2><p>Runner • Dodge • Fast</p></div>
+      </a>
+
     </div>
   </div>
 
@@ -173,26 +180,34 @@ search.addEventListener("input", () => {
     const text = card.innerText.toLowerCase();
     card.style.display = text.includes(value) ? "flex" : "none";
   });
+});
 
-  // Secret admin card
+// ENTER key logic for admin
+search.addEventListener("keydown", (e) => {
+  const value = search.value.toLowerCase();
   const adminText = "adminiscool464";
   const existingAdmin = document.getElementById("admin-card");
-  if(value === adminText && !existingAdmin){
-    const adminCard = document.createElement("a");
-    adminCard.href = "https://codingiscool464.github.io/adminiscool464";
-    adminCard.target = "_blank";
-    adminCard.id = "admin-card";
-    adminCard.className = "game-card";
-    adminCard.innerHTML = `
-      <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1237.png');"></div>
-      <div class="game-info"><h2>Admin Panel</h2><p>Secret • Hidden</p></div>
-    `;
-    document.getElementById("game-list").appendChild(adminCard);
-  }
-  if(value !== adminText && existingAdmin){
-    existingAdmin.remove();
+
+  if (e.key === "Enter") {
+    if (value === adminText && !existingAdmin) {
+      const adminCard = document.createElement("a");
+      adminCard.href = "https://codingiscool464.github.io/adminiscool464";
+      adminCard.target = "_blank";
+      adminCard.id = "admin-card";
+      adminCard.className = "game-card";
+      adminCard.innerHTML = `
+        <div class="game-thumb" style="background-image:url('http://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1237.png');"></div>
+        <div class="game-info"><h2>Admin Source Code</h2><p>Secret • Hidden</p></div>
+      `;
+      document.getElementById("game-list").appendChild(adminCard);
+    }
+
+    if (value !== adminText && existingAdmin) {
+      existingAdmin.remove();
+    }
   }
 });
 </script>
+
 </body>
 </html>

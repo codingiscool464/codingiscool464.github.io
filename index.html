@@ -37,7 +37,6 @@
     /* TOP BUTTONS */
     .top-button {
       position:absolute;
-      top:20px;
       padding:6px 12px;
       background:var(--card-bg);
       color:var(--accent);
@@ -52,8 +51,9 @@
       box-shadow:0 0 10px rgba(0,209,255,0.4);
     }
 
-    .suggestions-link { left:20px; }
-    .changelogs-link { right:20px; }
+    .suggestions-link { left:20px; top:20px; }
+    .update-link { left:20px; top:60px; }
+    .changelogs-link { right:20px; top:20px; }
 
     h1{
       font-size:2.8rem;
@@ -132,6 +132,10 @@
   <!-- TOP BUTTONS -->
   <a class="top-button suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">
     Suggestions
+  </a>
+
+  <a class="top-button update-link" href="https://codingiscool464.github.io/updatecountdown" target="_blank">
+    Update Countdown
   </a>
 
   <a class="top-button changelogs-link" href="https://codingiscool464.github.io/changelogs" target="_blank">

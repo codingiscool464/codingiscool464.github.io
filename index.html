@@ -45,9 +45,8 @@
       transition: none !important; animation: none !important; opacity:1 !important; transform:none !important; box-shadow:none !important;
     }
 
-    .suggestions-link {
+    .top-button {
       position: absolute;
-      top: 20px;
       left: 20px;
       color: var(--accent);
       text-decoration: none;
@@ -57,19 +56,26 @@
       padding: 6px 12px;
       border-radius: 6px;
       transition: 0.25s ease;
+      width: fit-content;
     }
-    .suggestions-link:hover {
+    .top-button:hover {
       background: #232933;
       box-shadow: 0 0 10px rgba(0,209,255,0.4);
     }
+
+    .suggestions-link { top: 20px; }
+    .countdown-link { top: 60px; }
 
     @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
 
-  <!-- Suggestions link -->
-  <a class="suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
+  <!-- Suggestions -->
+  <a class="top-button suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
+
+  <!-- Update Countdown -->
+  <a class="top-button countdown-link" href="https://codingiscool464.github.io/updatecountdown" target="_blank">Update Countdown</a>
 
   <div class="container" id="container">
     <h1>Game Launcher</h1>

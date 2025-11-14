@@ -1,184 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Changelog</title>
-<style>
-  :root{
-    --bg:#0b0e14;
-    --card-bg:#1a1f27;
-    --card-hover:#232933;
-    --accent:#00d1ff;
-    --text:#e5e5e5;
-    --subtitle:#9aa0a6;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Launcher</title>
+  <style>
+    :root{
+      --bg:#0b0e14; --card-bg:#1a1f27; --card-hover:#232933;
+      --accent:#00d1ff; --text:#e5e5e5; --subtitle:#9aa0a6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",Arial,sans-serif}
+    body{
+      background:var(--bg); color:var(--text);
+      display:flex; justify-content:center; align-items:flex-start;
+      min-height:100vh; padding:40px 20px;
+      position:relative;
+    }
+    .container{width:100%;max-width:800px; animation:fadeIn 0.8s ease}
+    h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent)}
+    p.header-sub{ text-align:center; opacity:.75; margin-bottom:20px }
+    #search{
+      width:100%; padding:12px; margin-bottom:20px; border-radius:8px;
+      border:none; outline:none; background:#161b22; color:var(--text); font-size:1rem;
+    }
 
-  *{box-sizing:border-box;margin:0;padding:0;font-family:"Inter", Arial, sans-serif}
+    .game-card{
+      display:flex; background:var(--card-bg); border:1px solid #2c3440;
+      margin:16px 0; padding:18px; border-radius:12px; text-decoration:none;
+      color:var(--text); transition:0.25s ease; align-items:center;
+      opacity:0; animation:fadeIn 0.7s ease forwards;
+    }
+    .game-card:hover{
+      background:var(--card-hover); transform:scale(1.03);
+      box-shadow:0 0 14px rgba(0,209,255,0.4);
+    }
+    .game-thumb{
+      width:80px; height:80px; background-size:cover; background-position:center;
+      border-radius:10px; margin-right:18px; flex-shrink:0;
+    }
+    .game-info h2{ font-size:1.4rem; margin-bottom:5px; color:var(--accent) }
+    .game-info p{ font-size:.95rem; color:var(--subtitle) }
 
-  body{
-    background:var(--bg);
-    color:var(--text);
-    display:flex;
-    min-height:100vh;
-  }
+    .no-anim .game-card {
+      transition: none !important; animation: none !important; opacity:1 !important; transform:none !important; box-shadow:none !important;
+    }
 
-  /* Sidebar */
-  .sidebar{
-    width:260px;
-    background:var(--card-bg);
-    height:100vh;
-    padding:20px;
-    box-sizing:border-box;
-    border-right:1px solid #2c3440;
-  }
+    .top-button {
+      position: absolute;
+      left: 20px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      background: #1a1f27;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: 0.25s ease;
+      width: fit-content;
+    }
+    .top-button:hover {
+      background: #232933;
+      box-shadow: 0 0 10px rgba(0,209,255,0.4);
+    }
 
-  .sidebar h2{
-    color:var(--accent);
-    margin-bottom:15px;
-    font-size:1.6rem;
-    text-align:center;
-  }
+    .suggestions-link { top: 20px; }
+    .countdown-link { top: 60px; }
 
-  .version-link{
-    display:block;
-    padding:12px;
-    border-radius:10px;
-    background:#161b22;
-    color:var(--text);
-    text-decoration:none;
-    margin-bottom:10px;
-    border:1px solid #2c3440;
-    transition:0.18s ease;
-  }
-
-  .version-link:hover{ background:var(--card-hover); transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,209,255,0.06); }
-
-  .home-btn{
-    display:block;
-    margin-top:18px;
-    padding:10px;
-    text-align:center;
-    border-radius:8px;
-    background:#121418;
-    color:var(--accent);
-    text-decoration:none;
-    border:1px solid #2c3440;
-  }
-  .home-btn:hover{ background:var(--card-hover); box-shadow:0 6px 18px rgba(0,209,255,0.06); }
-
-  /* Content */
-  .content{
-    flex:1;
-    padding:34px;
-    overflow-y:auto;
-  }
-
-  h1{
-    font-size:2rem;
-    color:var(--accent);
-    margin-bottom:8px;
-  }
-
-  h3{ color:var(--accent); margin-top:22px; margin-bottom:8px; font-size:1.05rem; }
-
-  p, li{
-    color:var(--text);
-    font-size:16px;
-    line-height:1.6;
-  }
-
-  ol{ margin-left:20px; }
-
-  .top-links{
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
-  }
-
-  .btn{
-    background:var(--card-bg);
-    padding:9px 12px;
-    border-radius:8px;
-    color:var(--accent);
-    text-decoration:none;
-    border:1px solid #2c3440;
-    font-weight:600;
-  }
-  .btn:hover{ background:var(--card-hover); box-shadow:0 6px 18px rgba(0,209,255,0.06); }
-
-  @media (max-width:800px){
-    .sidebar{ display:none; }
-    body{ padding:20px 0; }
-    .content{ padding:20px; }
-  }
-</style>
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+  </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar" role="navigation" aria-label="Changelog versions">
-    <h2>Changelogs</h2>
+  <!-- Suggestions -->
+  <a class="top-button suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
 
-    <a class="version-link" href="#" onclick="showLog('v11'); return false;">v1.1 — 11/14/2025</a>
+  <!-- Update Countdown -->
+  <a class="top-button countdown-link" href="https://codingiscool464.github.io/updatecountdown" target="_blank">Update Countdown</a>
 
-    <a class="home-btn" href="https://codingiscool464.github.io" target="_blank">⬅ Back to Home</a>
+  <div class="container" id="container">
+    <h1>Game Launcher</h1>
+    <p class="header-sub">Click a game to play!</p>
+
+    <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
+
+    <div id="game-list">
+
+      <!-- A -->
+      <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
+        <div class="game-info"><h2>A Small World Cup</h2><p>Physics • Soccer • Funny</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1208.png');"></div>
+        <div class="game-info"><h2>Amhooman Games</h2><p>Browser • Multi-game arcade</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/AwesomeTanks2/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1225.png');"></div>
+        <div class="game-info"><h2>Awesome Tanks 2</h2><p>Tanks • Shooter • Upgrades</p></div>
+      </a>
+
+      <!-- B -->
+      <a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1211.jpeg');"></div>
+        <div class="game-info"><h2>BitLife</h2><p>Life Simulator</p></div>
+      </a>
+
+      <!-- D -->
+      <a class="game-card" href="https://codingiscool464.github.io/DriftBoss/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1243.png');"></div>
+        <div class="game-info"><h2>Drift Boss</h2><p>Car • Casual • One-Button</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/DriveMad/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1244.jpeg');"></div>
+        <div class="game-info"><h2>Drive Mad</h2><p>Funny • Skill • Precision</p></div>
+      </a>
+
+      <!-- E -->
+      <a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1212.jpeg');"></div>
+        <div class="game-info"><h2>Eggy Car</h2><p>Car • Hill Climb • Balance</p></div>
+      </a>
+
+      <!-- F -->
+      <a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1213.jpeg');"></div>
+        <div class="game-info"><h2>FNAF 1</h2><p>Horror • Cameras • Survive</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/FNAF2/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1224.jpeg');"></div>
+        <div class="game-info"><h2>FNAF 2</h2><p>Horror • Survival</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/FNAF3/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1233.webp');"></div>
+        <div class="game-info"><h2>FNAF 3</h2><p>Horror • Springtrap</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/FNAF4/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1235.webp');"></div>
+        <div class="game-info"><h2>FNAF 4</h2><p>Horror • Nightmare</p></div>
+      </a>
+
+      <!-- M -->
+      <a class="game-card" href="https://codingiscool464.github.io/MonkeyMart/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1234.jpeg?raw=true');"></div>
+        <div class="game-info"><h2>Monkey Mart</h2><p>Shopping • Fun</p></div>
+      </a>
+
+      <!-- O -->
+      <a class="game-card" href="https://codingiscool464.github.io/OvO/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1226.png');"></div>
+        <div class="game-info"><h2>OvO</h2><p>Parkour • Momentum</p></div>
+      </a>
+
+      <!-- P -->
+      <a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1210.jpeg');"></div>
+        <div class="game-info"><h2>PolyTrack</h2><p>Racing • Fast • Flow</p></div>
+      </a>
+
+      <!-- R -->
+      <a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1215.webp');"></div>
+        <div class="game-info"><h2>Ragdoll Archers</h2><p>Bow Combat • Physics</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/run3/game" target="_blank">
+        <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1216.jpeg');"></div>
+        <div class="game-info"><h2>Run 3</h2><p>Runner • Void • Gravity</p></div>
+      </a>
+
+      <!-- S -->
+      <a class="game-card" href="https://codingiscool464.github.io/slope/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1240.png?raw=true');"></div>
+        <div class="game-info"><h2>Slope</h2><p>Fast • Reaction • Skill</p></div>
+      </a>
+
+      <a class="game-card" href="https://codingiscool464.github.io/SubwaySurfers/" target="_blank">
+        <div class="game-thumb" style="background-image:url('http://github.com/codingiscool464/codingiscool464.github.io/blob/main/IMG_1239.png?raw=true');"></div>
+        <div class="game-info"><h2>Subway Surfers</h2><p>Runner • Dodge • Fast</p></div>
+      </a>
+
+    </div>
   </div>
 
-  <!-- Main content -->
-  <main class="content" id="content" role="main" tabindex="0">
-    <div class="top-links">
-      <a class="btn" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
-      <a class="btn" href="https://codingiscool464.github.io/updatecountdown" target="_blank">Update Countdown</a>
-    </div>
-
-    <h1>v1.1 — 11/14/2025</h1>
-
-    <p>hello everyone! so glad that all of you are supporting my personal coding project, and without further yap from me, this is the change log for v1.1 of codingiscool464.github.io!</p>
-
-    <h3>GAME ADDITIONS:</h3>
-    <ol>
-      <li>Drive Mad</li>
-      <li>Drift Boss</li>
-    </ol>
-
-    <h3>OTHER ADDITIONS:</h3>
-    <ol>
-      <li>Added suggestions form for visitors to express their thoughts on the site.</li>
-      <li>Added update countdown for our weekly updates.</li>
-      <li>Added this changelog page!</li>
-    </ol>
-
-    <h3>NOTES FROM THE OWNER:</h3>
-    <p>weekly updates will now occur on Fridays at 1pm<br>
-    (note for this week: we have a no tech day on 11/21 so i will decide whether to do the update on thursday or push it out on sat/sun so its ready for monday)</p>
-
-    <p>i might start doing taco tuesday updates if i have time</p>
-
-    <p>when you submit the suggestion form, you might think i delete your submission right away but i actually save every one in a seperate folder and i read them during the week and plan for friday’s update</p>
-
-    <p>i have NO COLLABORATORS on this project and everything is operated by me, such as maintaining the website’s uptime, finding game source code, forking, deploying, and then adding the game card to the launcher</p>
-
-    <p>on the suggestion form please try and put a real name (not albert or pavlov) so i know who to talk to about the additions in the next update!</p>
-
-    <p>Do. Not. Spam. The. Form. (submitting same thing twice, just spamming messages to me, etc.)</p>
-
-    <p>so grateful for all of you supporting this and i will see you next update!</p>
-
-    <p>-WM</p>
-  </main>
-
 <script>
-  function showLog(key){
-    // only one version right now — future-proof hook
-    if(key === 'v11'){
-      // focus main content for accessibility
-      document.getElementById('content').focus();
-      // content already loaded by default — no fetch needed
+const search = document.getElementById("search");
+const container = document.getElementById("container");
+const cards = document.querySelectorAll(".game-card");
+
+search.addEventListener("input", () => {
+  const value = search.value.toLowerCase();
+  if(value){ container.classList.add("no-anim"); }
+  else{ container.classList.remove("no-anim"); }
+
+  cards.forEach(card =>{
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(value) ? "flex" : "none";
+  });
+});
+
+// ENTER key logic for admin
+search.addEventListener("keydown", (e) => {
+  const value = search.value.toLowerCase();
+  const adminText = "adminiscool464";
+  const existingAdmin = document.getElementById("admin-card");
+
+  if (e.key === "Enter") {
+    if (value === adminText && !existingAdmin) {
+      const adminCard = document.createElement("a");
+      adminCard.href = "https://codingiscool464.github.io/adminiscool464";
+      adminCard.target = "_blank";
+      adminCard.id = "admin-card";
+      adminCard.className = "game-card";
+      adminCard.innerHTML = `
+        <div class="game-thumb" style="background-image:url('http://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1237.png');"></div>
+        <div class="game-info"><h2>Admin Panel</h2><p>Secret • Hidden</p></div>
+      `;
+      document.getElementById("game-list").appendChild(adminCard);
+    }
+
+    if (value !== adminText && existingAdmin) {
+      existingAdmin.remove();
     }
   }
-  // load v1.1 by default
-  document.addEventListener('DOMContentLoaded', ()=>{ showLog('v11'); });
+});
 </script>
 
 </body>

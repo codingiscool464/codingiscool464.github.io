@@ -6,76 +6,137 @@
   <title>Game Launcher</title>
   <style>
     :root{
-      --bg:#0b0e14; --card-bg:#1a1f27; --card-hover:#232933;
-      --accent:#00d1ff; --text:#e5e5e5; --subtitle:#9aa0a6;
+      --bg:#0b0e14; 
+      --card-bg:#1a1f27; 
+      --card-hover:#232933;
+      --accent:#00d1ff; 
+      --text:#e5e5e5; 
+      --subtitle:#9aa0a6;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",Arial,sans-serif}
+    *{
+      box-sizing:border-box;
+      margin:0; padding:0;
+      font-family:"Inter",Arial,sans-serif;
+    }
     body{
-      background:var(--bg); color:var(--text);
-      display:flex; justify-content:center; align-items:flex-start;
-      min-height:100vh; padding:40px 20px;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      min-height:100vh;
+      padding:40px 20px;
       position:relative;
     }
-    .container{width:100%;max-width:800px; animation:fadeIn 0.8s ease}
-    h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent)}
-    p.header-sub{ text-align:center; opacity:.75; margin-bottom:20px }
+    .container{
+      width:100%;
+      max-width:800px;
+      animation:fadeIn 0.8s ease;
+    }
+
+    /* TOP BUTTONS */
+    .top-button {
+      position:absolute;
+      top:20px;
+      padding:6px 12px;
+      background:var(--card-bg);
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:bold;
+      font-size:1rem;
+      border-radius:6px;
+      transition:0.25s ease;
+    }
+    .top-button:hover{
+      background:var(--card-hover);
+      box-shadow:0 0 10px rgba(0,209,255,0.4);
+    }
+
+    .suggestions-link { left:20px; }
+    .changelogs-link { right:20px; }
+
+    h1{
+      font-size:2.8rem;
+      text-align:center;
+      margin-bottom:8px;
+      color:var(--accent);
+    }
+    p.header-sub{
+      text-align:center;
+      opacity:.75;
+      margin-bottom:20px;
+    }
     #search{
-      width:100%; padding:12px; margin-bottom:20px; border-radius:8px;
-      border:none; outline:none; background:#161b22; color:var(--text); font-size:1rem;
+      width:100%;
+      padding:12px;
+      margin-bottom:20px;
+      border-radius:8px;
+      border:none;
+      outline:none;
+      background:#161b22;
+      color:var(--text);
+      font-size:1rem;
     }
 
     .game-card{
-      display:flex; background:var(--card-bg); border:1px solid #2c3440;
-      margin:16px 0; padding:18px; border-radius:12px; text-decoration:none;
-      color:var(--text); transition:0.25s ease; align-items:center;
-      opacity:0; animation:fadeIn 0.7s ease forwards;
+      display:flex;
+      background:var(--card-bg);
+      border:1px solid #2c3440;
+      margin:16px 0;
+      padding:18px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--text);
+      transition:0.25s ease;
+      align-items:center;
+      opacity:0;
+      animation:fadeIn 0.7s ease forwards;
     }
     .game-card:hover{
-      background:var(--card-hover); transform:scale(1.03);
+      background:var(--card-hover);
+      transform:scale(1.03);
       box-shadow:0 0 14px rgba(0,209,255,0.4);
     }
     .game-thumb{
-      width:80px; height:80px; background-size:cover; background-position:center;
-      border-radius:10px; margin-right:18px; flex-shrink:0;
+      width:80px;height:80px;
+      background-size:cover;background-position:center;
+      border-radius:10px;margin-right:18px;
+      flex-shrink:0;
     }
-    .game-info h2{ font-size:1.4rem; margin-bottom:5px; color:var(--accent) }
-    .game-info p{ font-size:.95rem; color:var(--subtitle) }
+    .game-info h2{
+      font-size:1.4rem;
+      margin-bottom:5px;
+      color:var(--accent);
+    }
+    .game-info p{
+      font-size:.95rem;
+      color:var(--subtitle);
+    }
 
     .no-anim .game-card {
-      transition: none !important; animation: none !important; opacity:1 !important; transform:none !important; box-shadow:none !important;
+      transition: none !important; 
+      animation: none !important; 
+      opacity:1 !important;
+      transform:none !important;
+      box-shadow:none !important;
     }
 
-    .top-button {
-      position: absolute;
-      left: 20px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      background: #1a1f27;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: 0.25s ease;
-      width: fit-content;
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(6px)}
+      to{opacity:1; transform:translateY(0)}
     }
-    .top-button:hover {
-      background: #232933;
-      box-shadow: 0 0 10px rgba(0,209,255,0.4);
-    }
-
-    .suggestions-link { top: 20px; }
-    .countdown-link { top: 60px; }
-
-    @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
 
-  <!-- Suggestions -->
-  <a class="top-button suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">Suggestions</a>
+  <!-- TOP BUTTONS -->
+  <a class="top-button suggestions-link" href="https://codingiscool464.github.io/suggestionform/" target="_blank">
+    Suggestions
+  </a>
 
-  <!-- Update Countdown -->
-  <a class="top-button countdown-link" href="https://codingiscool464.github.io/updatecountdown" target="_blank">Update Countdown</a>
+  <a class="top-button changelogs-link" href="https://codingiscool464.github.io/changelogs" target="_blank">
+    Change Logs
+  </a>
 
   <div class="container" id="container">
     <h1>Game Launcher</h1>

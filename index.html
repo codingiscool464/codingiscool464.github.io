@@ -84,6 +84,22 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
 }
 .star.favorited { color:gold; }
 @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+
+/* --- Winter Theme Snowflakes --- */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1.2em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -264,6 +280,7 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
 </div>
 
 <script>
+// --- Favorites System ---
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
   const card = star.closest('.game-card');
@@ -275,6 +292,8 @@ stars.forEach(star => {
     localStorage.setItem(key, star.classList.contains('favorited'));
   });
 });
+
+// --- Search Functionality ---
 const search = document.getElementById("search");
 search.addEventListener("input", () => {
   const value = search.value.toLowerCase();
@@ -283,6 +302,55 @@ search.addEventListener("input", () => {
     card.style.display = text.includes(value) ? "flex" : "none";
   });
 });
+
+// --- Winter Theme Snowflakes ---
+let snowInterval;
+
+function createSnowflake() {
+  const snowflake = document.createElement("div");
+  snowflake.classList.add("snowflake");
+  snowflake.textContent = "❄";
+
+  // Random horizontal position
+  snowflake.style.left = Math.random() * window.innerWidth + "px";
+
+  // Random animation duration
+  const duration = 5 + Math.random() * 5; // 5–10 seconds
+  snowflake.style.animationDuration = duration + "s";
+
+  document.body.appendChild(snowflake);
+
+  // Remove after animation
+  setTimeout(() => {
+    snowflake.remove();
+  }, duration * 1000);
+}
+
+function startSnow() {
+  if (!snowInterval) {
+    snowInterval = setInterval(createSnowflake, 300); // every 300ms
+  }
+}
+
+function stopSnow() {
+  clearInterval(snowInterval);
+  snowInterval = null;
+}
+
+function checkTime() {
+  const now = new Date();
+  const minutes = now.getMinutes();
+
+  if (minutes >= 0 && minutes < 30) {
+    startSnow();
+  } else {
+    stopSnow();
+  }
+}
+
+// Check every minute
+setInterval(checkTime, 60000);
+checkTime(); // run immediately on load
 </script>
 </body>
 </html>

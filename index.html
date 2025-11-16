@@ -46,7 +46,6 @@ body{
 .changelogs-link { right:20px; top:20px; }
 h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent);}
 p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
-#search{width:100%;padding:12px;margin-bottom:20px;border-radius:8px;border:none;outline:none;background:#161b22;color:var(--text);font-size:1rem;}
 .game-card{
   display:flex;
   background:var(--card-bg);
@@ -121,9 +120,24 @@ body.winter {
 <div class="container">
 <h1>Game Launcher</h1>
 <p class="header-sub">Click a game to play!</p>
-<input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
-<div id="game-list">
 
+<!-- Search + Favorites Filter -->
+<div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
+  <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games" style="flex:1;">
+  <button id="filter-favorites" style="
+    padding:10px 16px;
+    border:none;
+    border-radius:8px;
+    background:var(--card-bg);
+    color:var(--accent);
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.25s ease;
+  ">Show Favorites</button>
+</div>
+
+<div id="game-list">
+  
 <!-- ALL GAME CARDS -->
 <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
   <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
@@ -286,7 +300,7 @@ body.winter {
   <div class="game-info"><h2>Survival Race</h2><p>Tiles • Spleef • Car</p></div>
   <span class="star">★</span>
 </a>
-
+  
 </div>
 </div>
 
@@ -311,6 +325,24 @@ search.addEventListener("input", () => {
   document.querySelectorAll(".game-card").forEach(card =>{
     const text = card.innerText.toLowerCase();
     card.style.display = text.includes(value) ? "flex" : "none";
+  });
+});
+
+// --- Favorites Filter Button ---
+const favButton = document.getElementById("filter-favorites");
+let showingFavorites = false;
+
+favButton.addEventListener("click", () => {
+  showingFavorites = !showingFavorites;
+  favButton.textContent = showingFavorites ? "Show All" : "Show Favorites";
+
+  document.querySelectorAll(".game-card").forEach(card => {
+    const star = card.querySelector(".star");
+    if (showingFavorites) {
+      card.style.display = star.classList.contains("favorited") ? "flex" : "none";
+    } else {
+      card.style.display = "flex";
+    }
   });
 });
 

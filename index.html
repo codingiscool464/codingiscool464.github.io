@@ -46,6 +46,16 @@ body{
 .changelogs-link { right:20px; top:20px; }
 h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent);}
 p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
+#search{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+  background:#161b22;
+  color:var(--text);
+  font-size:1rem;
+}
 .game-card{
   display:flex;
   background:var(--card-bg);
@@ -123,7 +133,7 @@ body.winter {
 
 <!-- Search + Favorites Filter -->
 <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
-  <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games" style="flex:1;">
+  <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
   <button id="filter-favorites" style="
     padding:10px 16px;
     border:none;

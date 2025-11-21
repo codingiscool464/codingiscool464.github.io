@@ -530,11 +530,12 @@ function checkTime() {
     rareTriggered = false;
     currentEvent = null;
 
-    // 🎲 Only roll for rare event at the exact top of the hour
+    // 🎲 Only roll once at minute 0
     if (Math.random() < 0.01) {
       currentEvent = "rare";
       rareTriggered = true;
-      startRareEvent();
+      startRareEvent(); 
+      stopSnow(); stopChristmas(); stopFireplace();
 
       // Force stop after 5 minutes
       setTimeout(() => {
@@ -547,11 +548,11 @@ function checkTime() {
       currentEvent = events[Math.floor(Math.random() * events.length)];
 
       if (currentEvent === "snow") {
-        startSnow(); stopChristmas(); stopFireplace();
+        startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
       } else if (currentEvent === "christmas") {
-        startChristmas(); stopSnow(); stopFireplace();
+        startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
       } else if (currentEvent === "fireplace") {
-        startFireplace(); stopSnow(); stopChristmas();
+        startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
       }
     }
   } else if (minutes > 0 && minutes < 15) {
@@ -561,12 +562,19 @@ function checkTime() {
       currentEvent = events[Math.floor(Math.random() * events.length)];
 
       if (currentEvent === "snow") {
-        startSnow(); stopChristmas(); stopFireplace();
+        startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
       } else if (currentEvent === "christmas") {
-        startChristmas(); stopSnow(); stopFireplace();
+        startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
       } else if (currentEvent === "fireplace") {
-        startFireplace(); stopSnow(); stopChristmas();
+        startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
       }
+    } else if (rareTriggered) {
+      // Rare event already happened → block normal events until next hour
+      stopSnow();
+      stopChristmas();
+      stopFireplace();
+      stopRareEvent();
+      currentEvent = null;
     }
   } else {
     // End of window: stop all events and reset

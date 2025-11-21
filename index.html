@@ -479,26 +479,33 @@ function stopFireplace() {
   document.body.classList.remove("fireplace");
 }
 
-// --- Random Event Selector (first 15 minutes each hour) ---
+// --- Random Event Selector (locked per 15‑minute window) ---
+let currentEvent = null;
+
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
 
   if (minutes >= 0 && minutes < 15) {
-    const events = ["snow", "christmas", "fireplace"];
-    const chosen = events[Math.floor(Math.random() * events.length)];
+    // Only choose once per window
+    if (!currentEvent) {
+      const events = ["snow", "christmas", "fireplace"];
+      currentEvent = events[Math.floor(Math.random() * events.length)];
+    }
 
-    if (chosen === "snow") {
+    if (currentEvent === "snow") {
       startSnow(); stopChristmas(); stopFireplace();
-    } else if (chosen === "christmas") {
+    } else if (currentEvent === "christmas") {
       startChristmas(); stopSnow(); stopFireplace();
-    } else {
+    } else if (currentEvent === "fireplace") {
       startFireplace(); stopSnow(); stopChristmas();
     }
   } else {
+    // End of window: stop all events and reset
     stopSnow();
     stopChristmas();
     stopFireplace();
+    currentEvent = null;
   }
 }
 

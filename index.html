@@ -95,11 +95,10 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
 .star.favorited { color:gold; }
 @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
 
-/* --- Winter Theme Snowflakes --- */
-.snowflake {
+/* --- Falling items (generic) --- */
+.falling {
   position: fixed;
   top: -10px;
-  color: white;
   font-size: 1.2em;
   pointer-events: none;
   animation-name: fall;
@@ -111,14 +110,46 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
   100% { transform: translateY(100vh); opacity: 0; }
 }
 
+/* --- Winter snowflake style (kept for legacy snow) --- */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1.2em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
+
 /* --- Winter Mode Colors --- */
 body.winter {
-  --bg: #0a1a2f;          /* deep winter navy */
-  --card-bg: #132b4a;     /* frosty blue-gray for cards */
-  --card-hover: #1c3b63;  /* lighter icy hover effect */
-  --accent: #4fc3f7;      /* bright ice-blue accent */
-  --text: #e0f7fa;        /* soft snow-white text */
-  --subtitle: #b3e5fc;    /* pale blue subtitles */
+  --bg: #0a1a2f;
+  --card-bg: #132b4a;
+  --card-hover: #1c3b63;
+  --accent: #4fc3f7;
+  --text: #e0f7fa;
+  --subtitle: #b3e5fc;
+}
+
+/* --- Christmas Mode Colors --- */
+body.christmas {
+  --bg: #1b0f0f;
+  --card-bg: #2e1a1a;
+  --card-hover: #3d2323;
+  --accent: #4caf50;
+  --text: #fff8e1;
+  --subtitle: #ffc107;
+}
+
+/* --- Fireplace Mode Colors --- */
+body.fireplace {
+  --bg: #2b1a12;
+  --card-bg: #3c2418;
+  --card-hover: #4a2e1f;
+  --accent: #ff7043;
+  --text: #ffe0b2;
+  --subtitle: #ffcc80;
 }
 </style>
 </head>
@@ -128,26 +159,26 @@ body.winter {
 <a class="top-button changelogs-link" href="https://codingiscool464.github.io/changelogs" target="_blank">Change Logs</a>
 
 <div class="container">
-<h1>Game Launcher</h1>
-<p class="header-sub">Click a game to play!</p>
+  <h1>Game Launcher</h1>
+  <p class="header-sub">Click a game to play!</p>
 
-<!-- Search + Favorites Filter -->
-<div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
-  <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
-  <button id="filter-favorites" style="
-    padding:10px 16px;
-    border:none;
-    border-radius:8px;
-    background:var(--card-bg);
-    color:var(--accent);
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.25s ease;
-  ">Show Favorites</button>
-</div>
+  <!-- Search + Favorites Filter -->
+  <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
+    <input id="search" type="text" placeholder="Search for a game…" aria-label="Search games">
+    <button id="filter-favorites" style="
+      padding:10px 16px;
+      border:none;
+      border-radius:8px;
+      background:var(--card-bg);
+      color:var(--accent);
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.25s ease;
+    ">Show Favorites</button>
+  </div>
 
 <div id="game-list">
-  
+
 <!-- ALL GAME CARDS -->
 <a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
   <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
@@ -319,10 +350,11 @@ body.winter {
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
   const card = star.closest('.game-card');
-  const key = card.querySelector('h2').innerText;
-  if(localStorage.getItem(key)==='true'){ star.classList.add('favorited'); }
-  star.addEventListener('click', e=>{
+  const key = card.querySelector('h2')?.innerText || '';
+  if (key && localStorage.getItem(key) === 'true') { star.classList.add('favorited'); }
+  star.addEventListener('click', e => {
     e.preventDefault();
+    if (!key) return;
     star.classList.toggle('favorited');
     localStorage.setItem(key, star.classList.contains('favorited'));
   });
@@ -341,71 +373,138 @@ search.addEventListener("input", () => {
 // --- Favorites Filter Button ---
 const favButton = document.getElementById("filter-favorites");
 let showingFavorites = false;
-
 favButton.addEventListener("click", () => {
   showingFavorites = !showingFavorites;
   favButton.textContent = showingFavorites ? "Show All" : "Show Favorites";
-
   document.querySelectorAll(".game-card").forEach(card => {
     const star = card.querySelector(".star");
     if (showingFavorites) {
-      card.style.display = star.classList.contains("favorited") ? "flex" : "none";
+      card.style.display = star && star.classList.contains("favorited") ? "flex" : "none";
     } else {
       card.style.display = "flex";
     }
   });
 });
 
-// --- Winter Theme Snowflakes ---
+// --- Winter Event ---
 let snowInterval;
-
 function createSnowflake() {
   const snowflake = document.createElement("div");
   snowflake.classList.add("snowflake");
   snowflake.textContent = "❄";
-
-  // Random horizontal position
   snowflake.style.left = Math.random() * window.innerWidth + "px";
-
-  // Random animation duration
-  const duration = 5 + Math.random() * 5; // 5–10 seconds
+  const duration = 5 + Math.random() * 5;
   snowflake.style.animationDuration = duration + "s";
-
   document.body.appendChild(snowflake);
-
-  // Remove after animation
-  setTimeout(() => {
-    snowflake.remove();
-  }, duration * 1000);
+  setTimeout(() => snowflake.remove(), duration * 1000);
 }
-
 function startSnow() {
   if (!snowInterval) {
-    snowInterval = setInterval(createSnowflake, 300); // every 300ms
-    document.body.classList.add("winter"); // activate winter colors
+    snowInterval = setInterval(createSnowflake, 300);
+    document.body.classList.add("winter");
   }
 }
-
 function stopSnow() {
   clearInterval(snowInterval);
   snowInterval = null;
-  document.body.classList.remove("winter"); // revert to normal colors
+  document.body.classList.remove("winter");
 }
 
+// --- Christmas Event ---
+let christmasInterval;
+let santaTimer;
+function createChristmasItem() {
+  const item = document.createElement("div");
+  item.classList.add("falling");
+  const options = ["🎄","🎁"];
+  item.textContent = options[Math.floor(Math.random()*options.length)];
+  item.style.left = Math.random() * window.innerWidth + "px";
+  const duration = 5 + Math.random() * 5;
+  item.style.animationDuration = duration + "s";
+  item.style.fontSize = (1 + Math.random() * 0.5) + "rem";
+  document.body.appendChild(item);
+  setTimeout(() => item.remove(), duration * 1000);
+}
+function santaFlyAcross() {
+  const santa = document.createElement("div");
+  santa.textContent = "🎅";
+  santa.style.position = "fixed";
+  santa.style.top = "50px";
+  santa.style.left = "-50px";
+  santa.style.fontSize = "2rem";
+  santa.style.zIndex = "9999";
+  santa.style.transition = "left 10s linear";
+  document.body.appendChild(santa);
+  setTimeout(() => santa.style.left = window.innerWidth + "px", 100);
+  setTimeout(() => santa.remove(), 11000);
+}
+function startChristmas() {
+  if (!christmasInterval) {
+    christmasInterval = setInterval(createChristmasItem, 400);
+    santaTimer = setInterval(santaFlyAcross, 20000);
+    document.body.classList.add("christmas");
+  }
+}
+function stopChristmas() {
+  clearInterval(christmasInterval);
+  clearInterval(santaTimer);
+  christmasInterval = null;
+  santaTimer = null;
+  document.body.classList.remove("christmas");
+}
+
+// --- Fireplace Event (no sound) ---
+let fireplaceInterval;
+function createEmber() {
+  const ember = document.createElement("div");
+  ember.classList.add("falling");
+  ember.textContent = "🔥";
+  ember.style.left = Math.random() * window.innerWidth + "px";
+  const duration = 3 + Math.random() * 4; // 3–7s
+  ember.style.animationDuration = duration + "s";
+  ember.style.fontSize = (1 + Math.random() * 1.5) + "rem";
+  ember.style.filter = "drop-shadow(0 0 6px rgba(255,112,67,0.6))";
+  document.body.appendChild(ember);
+  setTimeout(() => ember.remove(), duration * 1000);
+}
+function startFireplace() {
+  if (!fireplaceInterval) {
+    fireplaceInterval = setInterval(createEmber, 500); // spawn every 0.5s
+    document.body.classList.add("fireplace");
+  }
+}
+function stopFireplace() {
+  clearInterval(fireplaceInterval);
+  fireplaceInterval = null;
+  document.body.classList.remove("fireplace");
+}
+
+// --- Random Event Selector (first 15 minutes each hour) ---
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
 
   if (minutes >= 0 && minutes < 15) {
-    startSnow();
+    const events = ["snow", "christmas", "fireplace"];
+    const chosen = events[Math.floor(Math.random() * events.length)];
+
+    if (chosen === "snow") {
+      startSnow(); stopChristmas(); stopFireplace();
+    } else if (chosen === "christmas") {
+      startChristmas(); stopSnow(); stopFireplace();
+    } else {
+      startFireplace(); stopSnow(); stopChristmas();
+    }
   } else {
     stopSnow();
+    stopChristmas();
+    stopFireplace();
   }
 }
 
-// Check every minute
+// Run every minute and on load
 setInterval(checkTime, 60000);
-checkTime(); // run immediately on load
+checkTime();
 </script>
 </body>
 </html>

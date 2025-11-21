@@ -95,11 +95,10 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
 .star.favorited { color:gold; }
 @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
 
-/* --- Winter Theme Snowflakes --- */
-.snowflake {
+/* --- Falling Items --- */
+.falling {
   position: fixed;
   top: -10px;
-  color: white;
   font-size: 1.2em;
   pointer-events: none;
   animation-name: fall;
@@ -113,12 +112,22 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
 
 /* --- Winter Mode Colors --- */
 body.winter {
-  --bg: #0a1a2f;          /* deep winter navy */
-  --card-bg: #132b4a;     /* frosty blue-gray for cards */
-  --card-hover: #1c3b63;  /* lighter icy hover effect */
-  --accent: #4fc3f7;      /* bright ice-blue accent */
-  --text: #e0f7fa;        /* soft snow-white text */
-  --subtitle: #b3e5fc;    /* pale blue subtitles */
+  --bg: #0a1a2f;
+  --card-bg: #132b4a;
+  --card-hover: #1c3b63;
+  --accent: #4fc3f7;
+  --text: #e0f7fa;
+  --subtitle: #b3e5fc;
+}
+
+/* --- Christmas Mode Colors --- */
+body.christmas {
+  --bg: #1b0f0f;
+  --card-bg: #2e1a1a;
+  --card-hover: #3d2323;
+  --accent: #4caf50;
+  --text: #fff8e1;
+  --subtitle: #ffc107;
 }
 </style>
 </head>
@@ -147,170 +156,7 @@ body.winter {
 </div>
 
 <div id="game-list">
-  
-<!-- ALL GAME CARDS -->
-<a class="game-card" href="https://codingiscool464.github.io/a-small-world-cup/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1209.png');"></div>
-  <div class="game-info"><h2>A Small World Cup</h2><p>Physics • Soccer • Funny</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/maingames/games/index.html" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1208.png');"></div>
-  <div class="game-info"><h2>Amhooman Games</h2><p>Browser • Multi-game arcade</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/AwesomeTanks2/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1225.png');"></div>
-  <div class="game-info"><h2>Awesome Tanks 2</h2><p>Tanks • Shooter • Upgrades</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/bitlife/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1211.jpeg');"></div>
-  <div class="game-info"><h2>BitLife</h2><p>Life Simulator</p></div>
-  <span class="star">★</span>
-</a>
-  
-<a class="game-card" href="https://codingiscool464.github.io/DreadheadParkour/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/dreadhead-parkour.png');"></div>
-  <div class="game-info"><h2>Dreadhead Parkour</h2><p>Car • 3D • Multi-Button</p></div>
-  <span class="star">★</span>
-</a>
-  
-<a class="game-card" href="https://codingiscool464.github.io/DriftBoss/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1243.png');"></div>
-  <div class="game-info"><h2>Drift Boss</h2><p>Car • Casual • One-Button</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/DriveMad/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1244.jpeg');"></div>
-  <div class="game-info"><h2>Drive Mad</h2><p>Funny • Skill • Precision</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/eggycar/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1212.jpeg');"></div>
-  <div class="game-info"><h2>Eggy Car</h2><p>Car • Hill Climb • Balance</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/fnaf/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1213.jpeg');"></div>
-  <div class="game-info"><h2>FNAF 1</h2><p>Horror • Cameras • Survive</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/FNAF2/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1224.jpeg');"></div>
-  <div class="game-info"><h2>FNAF 2</h2><p>Horror • Survival</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/FNAF3/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1233.webp');"></div>
-  <div class="game-info"><h2>FNAF 3</h2><p>Horror • Springtrap</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/FNAF4/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1235.webp');"></div>
-  <div class="game-info"><h2>FNAF 4</h2><p>Horror • Nightmare</p></div>
-  <span class="star">★</span>
-</a>
-  
-<a class="game-card" href="https://codingiscool464.github.io/leveldevil/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/level%20devil.png');"></div>
-  <div class="game-info"><h2>Level Devil</h2><p>Parkour • 2D</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MonkeyMart/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1234.jpeg');"></div>
-  <div class="game-info"><h2>Monkey Mart</h2><p>Shopping • Fun</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MotoX3M/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/moto-x3m.png');"></div>
-  <div class="game-info"><h2>Moto X3M</h2><p>Stunt • Racing</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MotoX3M/2/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/moto-x3m-2.png');"></div>
-  <div class="game-info"><h2>Moto X3M 2</h2><p>Adrenaline • Extreme</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MotoX3M/5-pool-party/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/moto-x3m-5-pool-party.png');"></div>
-  <div class="game-info"><h2>Moto X3M Pool Party</h2><p>Water • Fun</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MotoX3M/6-spooky-land/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/spooky-land.png');"></div>
-  <div class="game-info"><h2>Moto X3M Spooky Land</h2><p>Scary • Motorcycle</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/MotoX3M/4-winter/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/moto-x3m-4-winter.png');"></div>
-  <div class="game-info"><h2>Moto X3M Winter</h2><p>Winter • Motorcycle</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/OvO/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1226.png');"></div>
-  <div class="game-info"><h2>OvO</h2><p>Parkour • Momentum</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/polytrack/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1210.jpeg');"></div>
-  <div class="game-info"><h2>PolyTrack</h2><p>Racing • Fast • Flow</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/ragdoll-archers/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1215.webp');"></div>
-  <div class="game-info"><h2>Ragdoll Archers</h2><p>Bow Combat • Physics</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/run3/game" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/main/IMG_1216.jpeg');"></div>
-  <div class="game-info"><h2>Run 3</h2><p>Runner • Void • Gravity</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/SliceMaster/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/slice-master.png');"></div>
-  <div class="game-info"><h2>Slice Master</h2><p>Satisfying • Fruit • Timing</p></div>
-  <span class="star">★</span>
-</a>
-  
-<a class="game-card" href="https://codingiscool464.github.io/slope/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1240.png');"></div>
-  <div class="game-info"><h2>Slope</h2><p>Fast • Reaction • Skill</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/SubwaySurfers/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/IMG_1239.png');"></div>
-  <div class="game-info"><h2>Subway Surfers</h2><p>Runner • Dodge • Fast</p></div>
-  <span class="star">★</span>
-</a>
-
-<a class="game-card" href="https://codingiscool464.github.io/SurvivalRace/" target="_blank">
-  <div class="game-thumb" style="background-image:url('https://raw.githubusercontent.com/codingiscool464/codingiscool464.github.io/refs/heads/main/survival-race.png');"></div>
-  <div class="game-info"><h2>Survival Race</h2><p>Tiles • Spleef • Car</p></div>
-  <span class="star">★</span>
-</a>
-  
+  <!-- PLACEHOLDER: paste all your game cards here -->
 </div>
 </div>
 
@@ -341,11 +187,9 @@ search.addEventListener("input", () => {
 // --- Favorites Filter Button ---
 const favButton = document.getElementById("filter-favorites");
 let showingFavorites = false;
-
 favButton.addEventListener("click", () => {
   showingFavorites = !showingFavorites;
   favButton.textContent = showingFavorites ? "Show All" : "Show Favorites";
-
   document.querySelectorAll(".game-card").forEach(card => {
     const star = card.querySelector(".star");
     if (showingFavorites) {
@@ -356,50 +200,99 @@ favButton.addEventListener("click", () => {
   });
 });
 
-// --- Winter Theme Snowflakes ---
+// --- Winter Event ---
 let snowInterval;
-
 function createSnowflake() {
   const snowflake = document.createElement("div");
-  snowflake.classList.add("snowflake");
+  snowflake.classList.add("falling");
   snowflake.textContent = "❄";
-
-  // Random horizontal position
   snowflake.style.left = Math.random() * window.innerWidth + "px";
-
-  // Random animation duration
-  const duration = 5 + Math.random() * 5; // 5–10 seconds
+  const duration = 5 + Math.random() * 5;
   snowflake.style.animationDuration = duration + "s";
-
   document.body.appendChild(snowflake);
-
-  // Remove after animation
-  setTimeout(() => {
-    snowflake.remove();
-  }, duration * 1000);
+  setTimeout(() => snowflake.remove(), duration * 1000);
 }
-
 function startSnow() {
   if (!snowInterval) {
-    snowInterval = setInterval(createSnowflake, 300); // every 300ms
-    document.body.classList.add("winter"); // activate winter colors
+    snowInterval = setInterval(createSnowflake, 300);
+    document.body.classList.add("winter");
   }
 }
-
 function stopSnow() {
   clearInterval(snowInterval);
   snowInterval = null;
-  document.body.classList.remove("winter"); // revert to normal colors
+  document.body.classList.remove("winter");
 }
 
+// --- Christmas Event ---
+let christmasInterval;
+let santaTimer;
+function createChristmasItem() {
+  const item = document.createElement("div");
+  item.classList.add("falling");
+  const options = ["🎄","🎁"];
+  item.textContent = options[Math.floor(Math.random()*options.length)];
+  item.style.left = Math.random() * window.innerWidth + "px";
+  const duration = 5 + Math.random() * 5;
+  item.style.animationDuration = duration + "s";
+  document.body.appendChild(item);
+  setTimeout(() => item.remove(), duration * 1000);
+}
+function santaFlyAcross() {
+  const santa = document.createElement("div");
+  santa.textContent = "🎅";
+  santa.style.position = "fixed";
+  santa.style.top = "50px";
+  santa.style.left = "-50px";
+  santa.style.fontSize = "2rem";
+  santa.style.zIndex = "9999";
+  santa.style.transition = "left 10s linear";
+
+  document.body.appendChild(santa);
+
+  // Start moving Santa across the screen
+  setTimeout(() => santa.style.left = window.innerWidth + "px", 100);
+
+  // Remove Santa after animation
+  setTimeout(() => santa.remove(), 11000);
+}
+
+function startChristmas() {
+  if (!christmasInterval) {
+    christmasInterval = setInterval(createChristmasItem, 400);
+    santaTimer = setInterval(santaFlyAcross, 20000);
+    document.body.classList.add("christmas");
+  }
+}
+
+function stopChristmas() {
+  clearInterval(christmasInterval);
+  clearInterval(santaTimer);
+  christmasInterval = null;
+  santaTimer = null;
+  document.body.classList.remove("christmas");
+}
+
+// --- Random Event Selector ---
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
 
   if (minutes >= 0 && minutes < 15) {
-    startSnow();
+    // Pick a random event
+    const events = ["snow", "christmas"];
+    const chosen = events[Math.floor(Math.random() * events.length)];
+
+    if (chosen === "snow") {
+      startSnow();
+      stopChristmas();
+    } else {
+      startChristmas();
+      stopSnow();
+    }
   } else {
     stopSnow();
+    stopChristmas();
   }
 }
 

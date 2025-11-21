@@ -127,6 +127,16 @@ p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
   animation-timing-function: linear;
   z-index: 9999;
 }
+  
+.partyEmoji {
+  position: fixed;
+  top: -10px;
+  font-size: 1.5em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
 
 /* --- Winter Mode Colors --- */
 body.winter {
@@ -485,32 +495,91 @@ function stopFireplace() {
   document.body.classList.remove("fireplace");
 }
 
-// --- Random Event Selector (locked per 15‑minute window) ---
+// --- Rare Party Event ---
+let rareInterval;
+function startRareEvent() {
+  if (!rareInterval) {
+    rareInterval = setInterval(() => {
+      const emoji = Math.random() < 0.5 ? "🎉" : "🥳";
+      const el = document.createElement("div");
+      el.className = "partyEmoji";
+      el.textContent = emoji;
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 5000);
+    }, 300);
+  }
+}
+function stopRareEvent() {
+  clearInterval(rareInterval);
+  rareInterval = null;
+  document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
+}
+
+// --- Random Event Selector (with rare event blocking) ---
 let currentEvent = null;
+let rareTriggered = false; // track if rare event happened this hour
 
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
 
-  if (minutes >= 0 && minutes < 15) {
-    // Only choose once per window
-    if (!currentEvent) {
-      const events = ["snow", "christmas", "fireplace"];
-      currentEvent = events[Math.floor(Math.random() * events.length)];
+  // Reset rareTriggered at the start of each hour
+  if (minutes === 0) {
+    rareTriggered = false;
+  }
+
+  if (minutes >= 0 && minutes < 5) {
+    // Top of hour rare event window
+    if (!currentEvent && !rareTriggered) {
+      if (Math.random() < 0.01) {
+        currentEvent = "rare";
+        rareTriggered = true; // mark rare event as triggered
+      } else {
+        const events = ["snow", "christmas", "fireplace"];
+        currentEvent = events[Math.floor(Math.random() * events.length)];
+      }
     }
 
-    if (currentEvent === "snow") {
-      startSnow(); stopChristmas(); stopFireplace();
+    if (currentEvent === "rare") {
+      startRareEvent(); stopSnow(); stopChristmas(); stopFireplace();
+    } else if (currentEvent === "snow") {
+      startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
     } else if (currentEvent === "christmas") {
-      startChristmas(); stopSnow(); stopFireplace();
+      startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
     } else if (currentEvent === "fireplace") {
-      startFireplace(); stopSnow(); stopChristmas();
+      startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
+    }
+  } else if (minutes >= 5 && minutes < 15) {
+    // Normal events only if rare event did NOT trigger
+    if (!rareTriggered) {
+      if (!currentEvent) {
+        const events = ["snow", "christmas", "fireplace"];
+        currentEvent = events[Math.floor(Math.random() * events.length)];
+      }
+
+      if (currentEvent === "snow") {
+        startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
+      } else if (currentEvent === "christmas") {
+        startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
+      } else if (currentEvent === "fireplace") {
+        startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
+      }
+    } else {
+      // Rare event already happened → block normal events until next hour
+      stopSnow();
+      stopChristmas();
+      stopFireplace();
+      stopRareEvent();
+      currentEvent = null;
     }
   } else {
     // End of window: stop all events and reset
     stopSnow();
     stopChristmas();
     stopFireplace();
+    stopRareEvent();
     currentEvent = null;
   }
 }

@@ -517,7 +517,7 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector (with rare event blocking) ---
+// --- Random Event Selector (rare event only at top of hour) ---
 let currentEvent = null;
 let rareTriggered = false; // track if rare event happened this hour
 
@@ -528,51 +528,45 @@ function checkTime() {
   // Reset rareTriggered at the start of each hour
   if (minutes === 0) {
     rareTriggered = false;
-  }
+    currentEvent = null;
 
-  if (minutes >= 0 && minutes < 5) {
-    // Top of hour rare event window
-    if (!currentEvent && !rareTriggered) {
-      if (Math.random() < 0.01) {
-        currentEvent = "rare";
-        rareTriggered = true; // mark rare event as triggered
-      } else {
-        const events = ["snow", "christmas", "fireplace"];
-        currentEvent = events[Math.floor(Math.random() * events.length)];
-      }
-    }
+    // 🎲 Only roll for rare event at the exact top of the hour
+    if (Math.random() < 0.01) {
+      currentEvent = "rare";
+      rareTriggered = true;
+      startRareEvent();
 
-    if (currentEvent === "rare") {
-      startRareEvent(); stopSnow(); stopChristmas(); stopFireplace();
-    } else if (currentEvent === "snow") {
-      startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
-    } else if (currentEvent === "christmas") {
-      startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
-    } else if (currentEvent === "fireplace") {
-      startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
-    }
-  } else if (minutes >= 5 && minutes < 15) {
-    // Normal events only if rare event did NOT trigger
-    if (!rareTriggered) {
-      if (!currentEvent) {
-        const events = ["snow", "christmas", "fireplace"];
-        currentEvent = events[Math.floor(Math.random() * events.length)];
-      }
+      // Force stop after 5 minutes
+      setTimeout(() => {
+        stopRareEvent();
+        currentEvent = null;
+      }, 5 * 60 * 1000);
+    } else {
+      // fallback: pick one normal event randomly
+      const events = ["snow", "christmas", "fireplace"];
+      currentEvent = events[Math.floor(Math.random() * events.length)];
 
       if (currentEvent === "snow") {
-        startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
+        startSnow(); stopChristmas(); stopFireplace();
       } else if (currentEvent === "christmas") {
-        startChristmas(); stopSnow(); stopFireplace(); stopRareEvent();
+        startChristmas(); stopSnow(); stopFireplace();
       } else if (currentEvent === "fireplace") {
-        startFireplace(); stopSnow(); stopChristmas(); stopRareEvent();
+        startFireplace(); stopSnow(); stopChristmas();
       }
-    } else {
-      // Rare event already happened → block normal events until next hour
-      stopSnow();
-      stopChristmas();
-      stopFireplace();
-      stopRareEvent();
-      currentEvent = null;
+    }
+  } else if (minutes > 0 && minutes < 15) {
+    // Normal events only if rare event did NOT trigger
+    if (!rareTriggered && !currentEvent) {
+      const events = ["snow", "christmas", "fireplace"];
+      currentEvent = events[Math.floor(Math.random() * events.length)];
+
+      if (currentEvent === "snow") {
+        startSnow(); stopChristmas(); stopFireplace();
+      } else if (currentEvent === "christmas") {
+        startChristmas(); stopSnow(); stopFireplace();
+      } else if (currentEvent === "fireplace") {
+        startFireplace(); stopSnow(); stopChristmas();
+      }
     }
   } else {
     // End of window: stop all events and reset

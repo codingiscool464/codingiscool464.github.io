@@ -543,10 +543,17 @@ function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
 
+  // Restore persisted event if available
+  if (!currentEvent) {
+    currentEvent = localStorage.getItem("currentEvent");
+    if (currentEvent === "rare") rareTriggered = true;
+  }
+
   // Reset rareTriggered at the start of each hour
   if (minutes === 0) {
     rareTriggered = false;
     currentEvent = null;
+    localStorage.removeItem("currentEvent");
 
     // 🎲 Only roll once at minute 0
     if (Math.random() < 0.01) {
@@ -555,15 +562,20 @@ function checkTime() {
       startRareEvent(); 
       stopSnow(); stopChristmas(); stopFireplace();
 
+      // Persist rare event
+      localStorage.setItem("currentEvent", currentEvent);
+
       // Force stop after 5 minutes
       setTimeout(() => {
         stopRareEvent();
         currentEvent = null;
+        localStorage.removeItem("currentEvent");
       }, 5 * 60 * 1000);
     } else {
       // fallback: pick one normal event randomly
       const events = ["snow", "christmas", "fireplace"];
       currentEvent = events[Math.floor(Math.random() * events.length)];
+      localStorage.setItem("currentEvent", currentEvent);
 
       if (currentEvent === "snow") {
         startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
@@ -578,6 +590,7 @@ function checkTime() {
     if (!rareTriggered && !currentEvent) {
       const events = ["snow", "christmas", "fireplace"];
       currentEvent = events[Math.floor(Math.random() * events.length)];
+      localStorage.setItem("currentEvent", currentEvent);
 
       if (currentEvent === "snow") {
         startSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
@@ -593,6 +606,7 @@ function checkTime() {
       stopFireplace();
       stopRareEvent();
       currentEvent = null;
+      localStorage.removeItem("currentEvent");
     }
   } else {
     // End of window: stop all events and reset
@@ -601,6 +615,7 @@ function checkTime() {
     stopFireplace();
     stopRareEvent();
     currentEvent = null;
+    localStorage.removeItem("currentEvent");
   }
 }
 

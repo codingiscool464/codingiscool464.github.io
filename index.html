@@ -380,6 +380,7 @@ body.fireplace {
 </div>
 
 <script>
+<script>
 // --- Favorites System ---
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
@@ -535,7 +536,7 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector (rare event only at top of hour, no localStorage, no repeats) ---
+// --- Random Event Selector (rare event only at top of hour, deterministic, no repeats) ---
 let currentEvent = null;
 let lastEvent = null;       // track the previous event
 let rareTriggered = false;  // track if rare event happened this hour
@@ -556,18 +557,20 @@ function runEvent(name) {
   }
 }
 
-function pickNormalEventNotSameAsLast() {
+// Deterministic pick based on hour, avoids back-to-back repeats
+function pickEventForHour(hour) {
   const events = ["snow", "christmas", "fireplace"];
-  let choice;
-  do {
-    choice = events[Math.floor(Math.random() * events.length)];
-  } while (events.length > 1 && choice === lastEvent);
+  let choice = events[hour % events.length];
+  if (choice === lastEvent && events.length > 1) {
+    choice = events[(hour + 1) % events.length];
+  }
   return choice;
 }
 
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
+  const hour = now.getHours();
 
   // Reset at exact top of hour
   if (minutes === 0) {
@@ -588,8 +591,7 @@ function checkTime() {
         rareStopTimeout = null;
       }, 5 * 60 * 1000);
     } else {
-      // Pick one normal event randomly, ensuring it's not the same as lastEvent
-      currentEvent = pickNormalEventNotSameAsLast();
+      currentEvent = pickEventForHour(hour);
       lastEvent = currentEvent;
       runEvent(currentEvent);
     }
@@ -610,9 +612,9 @@ function checkTime() {
       return;
     }
 
-    // If we loaded mid-window and no event is set, roll one now and lock it
+    // If we loaded mid-window and no event is set, derive deterministically
     if (!currentEvent) {
-      currentEvent = pickNormalEventNotSameAsLast();
+      currentEvent = pickEventForHour(hour);
       lastEvent = currentEvent;
     }
     runEvent(currentEvent);

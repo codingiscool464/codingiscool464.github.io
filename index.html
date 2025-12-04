@@ -487,14 +487,14 @@ function stopChristmas() {
   document.body.classList.remove("christmas");
 }
 
-// --- Fireplace Event (no sound) ---
+// --- Fireplace Event ---
 let fireplaceInterval;
 function createEmber() {
   const ember = document.createElement("div");
   ember.classList.add("falling");
   ember.textContent = "🔥";
   ember.style.left = Math.random() * window.innerWidth + "px";
-  const duration = 3 + Math.random() * 4; // 3–7s
+  const duration = 3 + Math.random() * 4;
   ember.style.animationDuration = duration + "s";
   ember.style.fontSize = (1 + Math.random() * 1.5) + "rem";
   ember.style.filter = "drop-shadow(0 0 6px rgba(255,112,67,0.6))";
@@ -503,7 +503,7 @@ function createEmber() {
 }
 function startFireplace() {
   if (!fireplaceInterval) {
-    fireplaceInterval = setInterval(createEmber, 500); // spawn every 0.5s
+    fireplaceInterval = setInterval(createEmber, 500);
     document.body.classList.add("fireplace");
   }
 }
@@ -535,7 +535,7 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector (new event only on reload, rare runs 5 min) ---
+// --- Random Event Selector ---
 let lastEvent = null;
 let rareStopTimeout = null;
 let rareActive = false;
@@ -561,29 +561,31 @@ function chooseEventOnLoad() {
   const now = new Date();
   const minutes = now.getMinutes();
 
-  if (minutes === 0) {
-    // reset rare
+  // If past cutoff, don't start anything
+  if (minutes >= 15) {
+    stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
     rareActive = false;
-
-    if (Math.random() < 0.01) {
-      rareActive = true;
-      runEvent("rare");
-      rareStopTimeout = setTimeout(() => {
-        stopRareEvent();
-        rareActive = false;
-      }, 5 * 60 * 1000);
-      return;
-    }
+    return;
   }
 
-  // If not rare, pick a normal event once on load
+  // At minute 0, rare chance
+  if (minutes === 0 && Math.random() < 0.01) {
+    rareActive = true;
+    runEvent("rare");
+    rareStopTimeout = setTimeout(() => {
+      stopRareEvent();
+      rareActive = false;
+    }, 5 * 60 * 1000);
+    return;
+  }
+
+  // Otherwise pick normal event
   const choice = pickNormalEventNotSameAsLast();
   lastEvent = choice;
   runEvent(choice);
 }
 
-// Stop everything after 15 minutes past the hour
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();

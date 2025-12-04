@@ -381,7 +381,6 @@ body.fireplace {
 
 <script>
 <script>
-<script>
 // --- Favorites System ---
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
@@ -537,10 +536,10 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector (rare event only at top of hour, deterministic, no repeats, mid-window fallback) ---
+// --- Random Event Selector ---
 let currentEvent = null;
-let lastEvent = null;       // track the previous event
-let rareTriggered = false;  // track if rare event happened this hour
+let lastEvent = null;
+let rareTriggered = false;
 let rareStopTimeout = null;
 
 function runEvent(name) {

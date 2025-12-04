@@ -380,7 +380,6 @@ body.fireplace {
 </div>
 
 <script>
-<script>
 // --- Favorites System ---
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
@@ -536,11 +535,10 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector ---
-let currentEvent = null;
+// --- Random Event Selector (new event only on reload, rare runs 5 min) ---
 let lastEvent = null;
-let rareTriggered = false;
 let rareStopTimeout = null;
+let rareActive = false;
 
 function runEvent(name) {
   stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
@@ -550,67 +548,56 @@ function runEvent(name) {
   else if (name === "fireplace") startFireplace();
 }
 
-function pickEventForHour(hour) {
+function pickNormalEventNotSameAsLast() {
   const events = ["snow", "christmas", "fireplace"];
-  let choice = events[hour % events.length];
-  if (choice === lastEvent && events.length > 1) {
-    choice = events[(hour + 1) % events.length];
-  }
+  let choice;
+  do {
+    choice = events[Math.floor(Math.random() * events.length)];
+  } while (events.length > 1 && choice === lastEvent);
   return choice;
 }
 
-function checkTime() {
+function chooseEventOnLoad() {
   const now = new Date();
   const minutes = now.getMinutes();
-  const hour = now.getHours();
 
   if (minutes === 0) {
-    rareTriggered = false;
-    currentEvent = null;
+    // reset rare
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
+    rareActive = false;
 
     if (Math.random() < 0.01) {
-      currentEvent = "rare";
-      rareTriggered = true;
+      rareActive = true;
       runEvent("rare");
       rareStopTimeout = setTimeout(() => {
         stopRareEvent();
-        currentEvent = null;
-        rareStopTimeout = null;
+        rareActive = false;
       }, 5 * 60 * 1000);
-    } else {
-      currentEvent = pickEventForHour(hour);
-      lastEvent = currentEvent;
-      runEvent(currentEvent);
-    }
-    return;
-  }
-
-  if (minutes > 0 && minutes < 15) {
-    if (currentEvent === "rare") {
-      runEvent("rare");
       return;
     }
-    if (rareTriggered) {
-      stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
-      currentEvent = null;
-      return;
-    }
-    if (!currentEvent) {
-      currentEvent = pickEventForHour(hour);
-      lastEvent = currentEvent;
-    }
-    runEvent(currentEvent);
-    return;
   }
 
-  stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
-  currentEvent = null;
-  if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
+  // If not rare, pick a normal event once on load
+  const choice = pickNormalEventNotSameAsLast();
+  lastEvent = choice;
+  runEvent(choice);
 }
 
+// Stop everything after 15 minutes past the hour
+function checkTime() {
+  const now = new Date();
+  const minutes = now.getMinutes();
+  if (minutes >= 15) {
+    stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
+    if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
+    rareActive = false;
+  }
+}
+
+// Pick event once on load
+chooseEventOnLoad();
+// Still check every minute to stop after 15
 setInterval(checkTime, 60000);
-checkTime();
 </script>
 </body>
 </html>

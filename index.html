@@ -381,6 +381,7 @@ body.fireplace {
 
 <script>
 <script>
+<script>
 // --- Favorites System ---
 const stars = document.querySelectorAll('.star');
 stars.forEach(star => {
@@ -536,28 +537,20 @@ function stopRareEvent() {
   document.querySelectorAll(".partyEmoji").forEach(el => el.remove());
 }
 
-// --- Random Event Selector (rare event only at top of hour, deterministic, no repeats) ---
+// --- Random Event Selector (rare event only at top of hour, deterministic, no repeats, mid-window fallback) ---
 let currentEvent = null;
 let lastEvent = null;       // track the previous event
 let rareTriggered = false;  // track if rare event happened this hour
 let rareStopTimeout = null;
 
 function runEvent(name) {
-  // Stop all others first
   stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
-
-  if (name === "rare") {
-    startRareEvent();
-  } else if (name === "snow") {
-    startSnow();
-  } else if (name === "christmas") {
-    startChristmas();
-  } else if (name === "fireplace") {
-    startFireplace();
-  }
+  if (name === "rare") startRareEvent();
+  else if (name === "snow") startSnow();
+  else if (name === "christmas") startChristmas();
+  else if (name === "fireplace") startFireplace();
 }
 
-// Deterministic pick based on hour, avoids back-to-back repeats
 function pickEventForHour(hour) {
   const events = ["snow", "christmas", "fireplace"];
   let choice = events[hour % events.length];
@@ -572,19 +565,15 @@ function checkTime() {
   const minutes = now.getMinutes();
   const hour = now.getHours();
 
-  // Reset at exact top of hour
   if (minutes === 0) {
     rareTriggered = false;
     currentEvent = null;
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
 
-    // Roll rare only at minute 0
     if (Math.random() < 0.01) {
       currentEvent = "rare";
       rareTriggered = true;
       runEvent("rare");
-
-      // Schedule stop in 5 minutes
       rareStopTimeout = setTimeout(() => {
         stopRareEvent();
         currentEvent = null;
@@ -598,21 +587,16 @@ function checkTime() {
     return;
   }
 
-  // Minutes 1–14
   if (minutes > 0 && minutes < 15) {
     if (currentEvent === "rare") {
-      runEvent("rare"); // keep rare going until timeout
+      runEvent("rare");
       return;
     }
-
     if (rareTriggered) {
-      // Rare happened earlier → block normal events until next hour
       stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
       currentEvent = null;
       return;
     }
-
-    // If we loaded mid-window and no event is set, derive deterministically
     if (!currentEvent) {
       currentEvent = pickEventForHour(hour);
       lastEvent = currentEvent;
@@ -621,16 +605,11 @@ function checkTime() {
     return;
   }
 
-  // Minute >= 15: end of window
-  stopSnow();
-  stopChristmas();
-  stopFireplace();
-  stopRareEvent();
+  stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
   currentEvent = null;
   if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
 }
 
-// Run every minute and on load
 setInterval(checkTime, 60000);
 checkTime();
 </script>

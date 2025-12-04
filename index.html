@@ -556,6 +556,15 @@ function runEvent(name) {
   }
 }
 
+function pickNormalEventNotSameAsLast() {
+  const events = ["snow", "christmas", "fireplace"];
+  let choice;
+  do {
+    choice = events[Math.floor(Math.random() * events.length)];
+  } while (events.length > 1 && choice === lastEvent);
+  return choice;
+}
+
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
@@ -580,34 +589,33 @@ function checkTime() {
       }, 5 * 60 * 1000);
     } else {
       // Pick one normal event randomly, ensuring it's not the same as lastEvent
-      const events = ["snow", "christmas", "fireplace"];
-      let choice;
-      do {
-        choice = events[Math.floor(Math.random() * events.length)];
-      } while (choice === lastEvent && events.length > 1);
-
-      currentEvent = choice;
-      lastEvent = choice; // update lastEvent
+      currentEvent = pickNormalEventNotSameAsLast();
+      lastEvent = currentEvent;
       runEvent(currentEvent);
     }
-    return; // minute 0 handled
+    return;
   }
 
   // Minutes 1–14
   if (minutes > 0 && minutes < 15) {
     if (currentEvent === "rare") {
-      // Rare continues until timeout
-      runEvent("rare");
+      runEvent("rare"); // keep rare going until timeout
       return;
     }
 
-    if (!rareTriggered && currentEvent) {
-      runEvent(currentEvent); // keep current event running
-    } else if (rareTriggered) {
+    if (rareTriggered) {
       // Rare happened earlier → block normal events until next hour
       stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent();
       currentEvent = null;
+      return;
     }
+
+    // If we loaded mid-window and no event is set, roll one now and lock it
+    if (!currentEvent) {
+      currentEvent = pickNormalEventNotSameAsLast();
+      lastEvent = currentEvent;
+    }
+    runEvent(currentEvent);
     return;
   }
 

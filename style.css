@@ -1,1 +1,162 @@
+:root{
+  --bg:#0b0e14; 
+  --card-bg:#1a1f27; 
+  --card-hover:#232933;
+  --accent:#00d1ff; 
+  --text:#e5e5e5; 
+  --subtitle:#9aa0a6;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",Arial,sans-serif;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  padding:40px 20px;
+  position:relative;
+  transition:background 1s ease, color 1s ease;
+}
+.container{width:100%;max-width:800px;animation:fadeIn 0.8s ease;}
+.top-button {
+  position:absolute;
+  padding:6px 12px;
+  background:var(--card-bg);
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:bold;
+  font-size:1rem;
+  border-radius:6px;
+  transition:0.25s ease;
+}
+.top-button:hover{
+  background:var(--card-hover);
+  box-shadow:0 0 10px rgba(0,209,255,0.4);
+}
+.suggestions-link { left:20px; top:20px; }
+.update-link { left:20px; top:60px; }
+.changelogs-link { right:20px; top:20px; }
+h1{font-size:2.8rem;text-align:center;margin-bottom:8px;color:var(--accent);}
+p.header-sub{text-align:center;opacity:.75;margin-bottom:20px;}
+#search{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+  background:#161b22;
+  color:var(--text);
+  font-size:1rem;
+}
+.game-card{
+  display:flex;
+  background:var(--card-bg);
+  border:1px solid #2c3440;
+  margin:16px 0;
+  padding:18px;
+  border-radius:12px;
+  text-decoration:none;
+  color:var(--text);
+  transition:0.25s ease;
+  align-items:center;
+  position:relative;
+}
+.game-card:hover{
+  background:var(--card-hover);
+  transform:scale(1.03);
+  box-shadow:0 0 14px rgba(0,209,255,0.4);
+}
+.game-thumb{
+  width:80px;height:80px;
+  background-size:cover;background-position:center;
+  border-radius:10px;margin-right:18px;
+  flex-shrink:0;
+}
+.game-info h2{font-size:1.4rem;margin-bottom:5px;color:var(--accent);}
+.game-info p{font-size:.95rem;color:var(--subtitle);}
+.star {
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:1.5rem;
+  color:var(--subtitle);
+  cursor:pointer;
+  transition:0.2s ease;
+  user-select:none;
+}
+.star.favorited { color:gold; }
 
+/* ✨ Hover glow effect */
+.star:hover {
+  text-shadow: 0 0 6px currentColor;
+}
+
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+
+/* --- Falling items (generic) --- */
+.falling {
+  position: fixed;
+  top: -10px;
+  font-size: 1.2em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* --- Winter snowflake style (kept for legacy snow) --- */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1.2em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
+  
+.partyEmoji {
+  position: fixed;
+  top: -10px;
+  font-size: 1.5em;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 9999;
+}
+
+/* --- Winter Mode Colors --- */
+body.winter {
+  --bg: #0a1a2f;
+  --card-bg: #132b4a;
+  --card-hover: #1c3b63;
+  --accent: #4fc3f7;
+  --text: #e0f7fa;
+  --subtitle: #b3e5fc;
+}
+
+/* --- Christmas Mode Colors --- */
+body.christmas {
+  --bg: #1b0f0f;
+  --card-bg: #2e1a1a;
+  --card-hover: #3d2323;
+  --accent: #4caf50;
+  --text: #fff8e1;
+  --subtitle: #003ef8;
+}
+
+/* --- Fireplace Mode Colors --- */
+body.fireplace {
+  --bg: #2b1a12;
+  --card-bg: #3c2418;
+  --card-hover: #4a2e1f;
+  --accent: #ff7043;
+  --text: #ffe0b2;
+  --subtitle: #00337f;
+}

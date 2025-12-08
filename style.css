@@ -160,3 +160,29 @@ body.fireplace {
   --text: #ffe0b2;
   --subtitle: #00337f;
 }
+
+/* --- Underwater Mode Colors --- */
+body.underwater {
+  --bg: #001f33;
+  --card-bg: #00334d;
+  --card-hover: #004466;
+  --accent: #33ccff;
+  --text: #e0faff;
+  --subtitle: #99d6ff;
+}
+
+/* Fish animation */
+.fish {
+  position: fixed;
+  top: calc(20% + (60% * var(--rand-y)));
+  left: -50px;
+  font-size: 2rem;
+  animation: swim 12s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes swim {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(110vw); opacity: 0.9; }
+}

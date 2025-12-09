@@ -206,7 +206,7 @@ function chooseEventOnLoad() {
   const now = new Date();
   const minutes = now.getMinutes();
 
-  if (minutes >= 30) {
+  if (minutes >= 15) {
     stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent(); stopUnderwater();
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
     rareActive = false;
@@ -231,7 +231,7 @@ function chooseEventOnLoad() {
 function checkTime() {
   const now = new Date();
   const minutes = now.getMinutes();
-  if (minutes >= 30) {
+  if (minutes >= 15) {
     stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent(); stopUnderwater();
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
     rareActive = false;

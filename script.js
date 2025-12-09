@@ -241,5 +241,3 @@ function checkTime() {
 // Pick event once on load
 chooseEventOnLoad();
 setInterval(checkTime, 60000);
-// Still check every minute to stop after 15
-setInterval(checkTime, 60000);

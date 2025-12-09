@@ -206,7 +206,7 @@ function chooseEventOnLoad() {
   const now = new Date();
   const minutes = now.getMinutes();
 
-  if (minutes >= 15) {
+  if (minutes >= 30) {
     stopSnow(); stopChristmas(); stopFireplace(); stopRareEvent(); stopUnderwater();
     if (rareStopTimeout) { clearTimeout(rareStopTimeout); rareStopTimeout = null; }
     rareActive = false;
